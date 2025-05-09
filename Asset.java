@@ -5,6 +5,7 @@ public class Asset{
     private String assetType;
     private float purchasePrice;
     private Date purchaseDate;
+    
     public float getpurchasePrice() {
         return (int) purchasePrice;
     }

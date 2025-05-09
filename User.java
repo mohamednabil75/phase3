@@ -1,10 +1,13 @@
 public class User {
+
+    private int userId=0;
+    
     private String name;
     private String email;
     private String password;
-    private int userId=0;
-    private float income ;
-    private float balance ;
+    private float income;
+    private float balance;
+
     public User(String name, String email, String password, int userId, float income, float balance) {
         this.name = name;
         this.email = email;
@@ -36,6 +39,11 @@ public class User {
         userId++;
         return userId;
     }
+
+    public float getIncome() {
+        return income;
+    }
+
     public float getBalance() {
         return balance;
     }
