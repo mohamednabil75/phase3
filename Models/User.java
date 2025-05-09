@@ -1,3 +1,4 @@
+package Models;
 import java.util.ArrayList;
 
 /**
@@ -6,13 +7,10 @@ import java.util.ArrayList;
  */
 public class User {
 
-    private int userId=0;
     
     private String name;
     private String email;
     private String password;
-    private float income;
-    private float balance;
 
     private int userId;
     private float income;

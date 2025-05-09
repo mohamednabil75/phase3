@@ -4,6 +4,9 @@ public class DBConfig {
         Database.Connect();
         InitUser();
         InitAsset();
+        InitPortfolio();
+        InitFinancialGoal();
+        InitBankAccount();
     }
 
     public static void InitUser(){
@@ -11,6 +14,18 @@ public class DBConfig {
     }
 
     public static void InitAsset(){
-        Database.Query("CREATE TABLE IF NOT EXISTS Asset (assetId INT, name TEXT, assetType TEXT, purchasePrice REAL, purchaseDate DATA)");
+        Database.Query("CREATE TABLE IF NOT EXISTS Asset (assetId INT, portfolio INT, name TEXT, assetType TEXT, purchasePrice REAL, purchaseDate DATA)");
+    }
+
+    public static void InitPortfolio(){
+        Database.Query("CREATE TABLE IF NOT EXISTS Portfolio (portfolioId INT, amount REAL)");
+    }
+
+    public static void InitFinancialGoal(){
+        Database.Query("CREATE TABLE IF NOT EXISTS FinancialGoal (goalId INT, userId INT, goalType TEXT, targetAmount REAL, currentAmount REAL, targetDate DATE)");
+    }
+
+    public static void InitBankAccount(){
+        Database.Query("CREATE TABLE IF NOT EXISTS BankAccount (bankId INT, userId INT, bankName TEXT, cardHolderName TEXT, cardNumber TEXT, cvv INT, expiredDate DATE, balance REAL)");
     }
 }

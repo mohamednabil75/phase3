@@ -1,3 +1,4 @@
+package Models;
 import java.util.Date;
 
 /**
@@ -12,16 +13,28 @@ public class Asset {
     public String name;
 
     /** Current amount or value of the asset */
-    private float amount;
+    public float amount;
 
     /** Type of asset (e.g., gold, silver, stock, etc.) */
-    private String assetType;
+    public String assetType;
 
     /** Purchase price of the asset */
-    private float purchasePrice;
+    public float purchasePrice;
 
     /** Date when the asset was purchased */
-    private Date purchaseDate;
+    public Date purchaseDate;
+
+    public int portfolioId;
+
+    public Asset(int assetId, int portfolioId, String name, float amount, String assetType, float purchasePrice, Date purchaseDate) {
+        this.assetId = assetId;
+        this.portfolioId = portfolioId;
+        this.name = name;
+        this.amount = amount;
+        this.assetType = assetType;
+        this.purchasePrice = purchasePrice;
+        this.purchaseDate = purchaseDate;
+    }
 
     /**
      * Sets the current amount or value of the asset.
