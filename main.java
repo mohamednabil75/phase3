@@ -1,10 +1,15 @@
 
+import Models.Asset;
 import Models.BankAccount;
 import Models.Financegoal;
 import Models.Goal;
 import Models.User;
+import java.util.Date;
+import java.util.Scanner;
 
-public class Main {
+
+
+public class main {
     public static void main(String[] args) {
         // Asset a = new Asset();
         // a.setAssetType("gold");
@@ -26,13 +31,105 @@ public class Main {
         // p.calculatezakat(z1,9);
         // System.out.print("\n");
         // p.calculatezakat(z2, 7);
+        
+        while (true) { 
+            int choice;
+            Scanner sc = new Scanner(System.in);
+            System.out.println("1.sign up\n2.sign in\n3.exit");
+            choice = sc.nextInt();
+            if (choice == 1) {
+                System.out.println("enter your name");
+                String name = sc.next();
+                System.out.println("enter your email");
+                String email = sc.next();
+                System.out.println("enter your password");
+                String password = sc.next();
+                System.out.println("enter your userId");
+                int userId = sc.nextInt();
+                System.out.println("enter your income");
+                float income = sc.nextFloat();
+                System.out.println("enter your balance");
+                float balance = sc.nextFloat();
 
+                User u1 = new User(name, email, password, userId, income, balance);
+                Repository.addUser(u1);
+            } else if (choice == 2) {
+                System.out.println("enter your email");
+                String email = sc.next();
+                User u1 = Repository.getUser(email);
+                if (u1 != null) {
+                    System.out.println("Welcome " + u1.getName());
+                   
+                    break;
+                } else {
+                    System.out.println("User not found.\n\nPlease,sign up first.");
+                }
+                System.err.println("enter your password");
+                String password = sc.next();
+                if (u1.getPassword()==password) {
+                    System.out.println("Welcome " + u1.getName());
+                    break;
+                } else {
+                    System.out.println("Wrong password");
+                }
+                System.err.println("1)add bank account\n2) add Asset\n3) editAsset 4)exit");
+                int choice2 = sc.nextInt();
+                if (choice2 == 1) {
+                    System.out.println("enter your bank name");
+                    String bankName = sc.next();
+                    System.out.println("enter your card number");
+                    String cardNumber = sc.next();
+                    System.out.println("enter your account number");
+                    String accountNumber = sc.next();
+                    System.out.println("enter your cvv");
+                    int cvv = sc.nextInt();
+                    System.out.println("enter your expired date");
+                    String expiredDate = sc.next();
+                    System.out.println("enter your balance");
+                    float balance = sc.nextFloat();
+
+                    BankAccount b1 = new BankAccount(114100, bankName, u1.getName(), accountNumber, cvv, expiredDate, balance);
+                    u1.addBankAccount(b1);
+                } else if (choice2 == 2) {
+                    System.out.println("enter your asset name");
+                    String assetName = sc.next();
+                    System.out.println("enter your asset type");
+                    String assetType = sc.next();
+                    System.out.println("enter your purchase price");
+                    float purchasePrice = sc.nextFloat();
+                    System.out.println("enter your purchase date");
+                    Date purchaseDate = new Date();
+                    System.out.println("enter your asset amount");
+                    float amount = sc.nextFloat();
+                    Asset a1 = new Asset(114100, 114100, assetName, amount, assetType, purchasePrice, purchaseDate);
+                    u1.asset=a1;
+
+                } else if (choice2 == 3) {
+                    System.out.println("enter your asset name");
+                    String assetName = sc.next();
+                    System.out.println("enter your asset type");
+                    String assetType = sc.next();
+                    System.out.println("enter your purchase price");
+                    float purchasePrice = sc.nextFloat();
+                    System.out.println("enter your purchase date");
+                    Date purchaseDate = new Date();
+                    System.out.println("enter your asset amount");
+                    float amount = sc.nextFloat();
+                    Asset a1 = new Asset(114100, 114100, assetName, amount, assetType, purchasePrice, purchaseDate);
+                    u1.asset=a1;
+                    
+                }
+
+            } else if (choice == 3) {
+                break;
+            }
+            
+        }
         BankAccount b1 = new BankAccount(114100, "Bank masr", "seif anwar", "203012", 3343, "12-12-2025", 50000) ;
         BankAccount b2 = new BankAccount(114100, "Bank masr", "ramadan sobhi", "203989", 9807, "12-8-2025", 98700000) ;
         BankAccount b3 = new BankAccount(114102, "Bank Alahly", "samir kamona", "204546", 7700, "30-12-2025", 98900) ;
-
-        b1.deposit(7000);
         User u1 = new User("seif", "seif2005", "123123", 12343, 90000, 908080);
+        b1.deposit(7000);
         u1.addBankAccount(b1);
         u1.addBankAccount(b2);
         System.out.println(b1.getBalance()); 

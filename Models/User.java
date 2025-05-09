@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class User {
 
-    
+    public Asset asset;
     private String name;
     private String email;
     private String password;
