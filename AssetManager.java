@@ -1,3 +1,4 @@
+import Models.Asset;
 import java.util.ArrayList;
 
 public class AssetManager {

@@ -1,4 +1,8 @@
-import java.util.ArrayList;
+
+import Models.BankAccount;
+import Models.Financegoal;
+import Models.Goal;
+import Models.User;
 
 public class Main {
     public static void main(String[] args) {

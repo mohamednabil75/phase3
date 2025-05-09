@@ -1,21 +1,43 @@
-public class Authenticator {    
+import Models.User;
 
-    public boolean  login(String email, String password) {
-        if(true){
-        return true;
+public class Authenticator {
+
+    private static int loggedUser = -1;
+
+    public static boolean login(String email, String password) {
+
+        try {
+            User user = Repository.getUser(email);
+            if (user != null) {
+                if (user.getPassword().equals(password)) {
+                    loggedUser = user.getUserId();
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        else{
-            return false;
-        }
+
+    }
       
-}
 
-    public boolean signup(User user) {
-     if(true){
-        return true;
+    public static void signup(User user) {
+        try {
+            Repository.addUser(user);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        else{
-            return false;
-        }
+    }
+
+    public static boolean isLoggedIn() {
+        return loggedUser != -1;
+    }
+
+    public static void logout() {
+        loggedUser = -1;
     }
 }
