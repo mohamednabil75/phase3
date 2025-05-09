@@ -1,15 +1,4 @@
-<<<<<<< HEAD
-public class Main {
-    public static void main(String[] args) {
-        DBConfig.Init();
 
-        User fetchedUser = Repository.getUser("email@gmail.com");
-        if (fetchedUser != null) {
-            System.out.println("User found: " + fetchedUser.getName());
-        } else {
-            System.out.println("User not found.");
-        }
-=======
 import java.util.ArrayList;
 
 public class Main {
@@ -64,6 +53,5 @@ public class Main {
 
 
 
->>>>>>> 534c2fc5888420c8324d5d084ec87ab89d4d1a3a
     }
 }
