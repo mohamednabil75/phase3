@@ -14,7 +14,7 @@ public class Repository {
             String query = "INSERT INTO User (name, email, password, userId, income, balance) VALUES ('" + user.getName() + "', '" + user.getEmail() + "', '" + user.getPassword() + "', " + user.getUserId() + ", " + user.getIncome() + ", " + user.getBalance() + ")";
 
             // Create a portfolio for the user
-            String portfolioQuery = "INSERT INTO Portfolio (portfolioId, amount) VALUES (" + user.getUserId() + ", " + ", 0)";
+            String portfolioQuery = "INSERT INTO Portfolio (portfolioId, amount) VALUES (" + user.getUserId() + ", " + "0)";
             
             Database.Query(query);
             Database.Query(portfolioQuery);

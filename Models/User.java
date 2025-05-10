@@ -107,7 +107,6 @@ public class User {
      * @return the incremented user ID
      */
     public int getUserId() {
-        userId++;
         return userId;
     }
 
