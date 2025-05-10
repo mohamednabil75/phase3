@@ -1,11 +1,11 @@
 package Models;
-import java.util.Date;
 
 /**
  * Represents a financial asset owned by a user.
  * This includes properties such as asset type, purchase price, and eligibility for zakat.
  */
 public class Asset {
+ 
     /** Unique identifier for the asset */
     public int assetId;
 
@@ -22,11 +22,11 @@ public class Asset {
     public float purchasePrice;
 
     /** Date when the asset was purchased */
-    public Date purchaseDate;
+    public String purchaseDate;
 
     public int portfolioId;
 
-    public Asset(int assetId, int portfolioId, String name, float amount, String assetType, float purchasePrice, Date purchaseDate) {
+    public Asset(int assetId, int portfolioId, String name, float amount, String assetType, float purchasePrice, String purchaseDate) {
         this.assetId = assetId;
         this.portfolioId = portfolioId;
         this.name = name;
@@ -95,7 +95,7 @@ public class Asset {
      *
      * @return the purchase date
      */
-    public Date getPurchaseDate() {
+    public String getPurchaseDate() {
         return purchaseDate;
     }
 
