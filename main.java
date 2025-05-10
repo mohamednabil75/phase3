@@ -8,9 +8,10 @@ import java.util.Date;
 import java.util.Scanner;
 
 
-
-public class main {
+public class Main {
     public static void main(String[] args) {
+    DBConfig.Init();
+
         // Asset a = new Asset();
         // a.setAssetType("gold");
         // a.setamount(40000);
@@ -38,20 +39,20 @@ public class main {
             System.out.println("1.sign up\n2.sign in\n3.exit");
             choice = sc.nextInt();
             if (choice == 1) {
-                System.out.println("enter your name");
-                String name = sc.next();
-                System.out.println("enter your email");
-                String email = sc.next();
-                System.out.println("enter your password");
-                String password = sc.next();
-                System.out.println("enter your userId");
-                int userId = sc.nextInt();
-                System.out.println("enter your income");
-                float income = sc.nextFloat();
-                System.out.println("enter your balance");
-                float balance = sc.nextFloat();
+                // System.out.println("enter your name");
+                // String name = sc.next();
+                // System.out.println("enter your email");
+                // String email = sc.next();
+                // System.out.println("enter your password");
+                // String password = sc.next();
+                // System.out.println("enter your userId");
+                // int userId = sc.nextInt();
+                // System.out.println("enter your income");
+                // float income = sc.nextFloat();
+                // System.out.println("enter your balance");
+                // float balance = sc.nextFloat();
 
-                User u1 = new User(name, email, password, userId, income, balance);
+                User u1 = new User("m", "m", "m", 1000, 40, 60);
                 Repository.addUser(u1);
             } else if (choice == 2) {
                 System.out.println("enter your email");
