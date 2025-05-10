@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-    DBConfig.Init();
+        DBConfig.Init();
 
         // Asset a = new Asset();
         // a.setAssetType("gold");
@@ -52,7 +52,7 @@ public class Main {
                 // System.out.println("enter your balance");
                 // float balance = sc.nextFloat();
 
-                User u1 = new User("m", "m", "m", 1000, 40, 60);
+                User u1 = new User("m", "m", "m", 1020, 40, 60);
                 Repository.addUser(u1);
             } else if (choice == 2) {
                 System.out.println("enter your email");
