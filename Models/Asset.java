@@ -26,11 +26,10 @@ public class Asset {
 
     public int portfolioId;
 
-    public Asset(int assetId, int portfolioId, String name, float amount, String assetType, float purchasePrice, String purchaseDate) {
+    public Asset(int assetId, int portfolioId, String name,  String assetType, float purchasePrice, String purchaseDate) {
         this.assetId = assetId;
         this.portfolioId = portfolioId;
         this.name = name;
-        this.amount = amount;
         this.assetType = assetType;
         this.purchasePrice = purchasePrice;
         this.purchaseDate = purchaseDate;

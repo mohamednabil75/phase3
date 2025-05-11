@@ -14,9 +14,9 @@ public class User {
     private float income;
     private float balance;
 
-    private ArrayList<BankAccount> accounts = new ArrayList<>();
+    public ArrayList<BankAccount> accounts = new ArrayList<>();
     private ArrayList<Financegoal> fg = new ArrayList<>();
-    private ArrayList<Asset> assets = new ArrayList<>();
+    public ArrayList<Asset> assets = new ArrayList<>();
 
 
     public User(String name, String email, String password, int userId, float income, float balance) {
@@ -38,6 +38,7 @@ public class User {
     public int getUserId() { return userId; }
     public float getIncome() { return income; }
     public float getBalance() { return balance; }
+    public void setBalance(float balance) { this.balance = balance;  }
 
     // ===== Bank Accounts =====
     public void addBankAccount(BankAccount account) {
@@ -86,7 +87,6 @@ public class User {
                System.out.println("Asset " + (i + 1) + ": " + assets.get(i).name);
                 System.out.println("Asset ID: " + assets.get(i).assetId);
                 System.out.println("Portfolio ID: " + assets.get(i).portfolioId);
-                System.out.println("Amount: " + assets.get(i).amount);
                 System.out.println("Asset Type: " + assets.get(i).assetType);
                 System.out.println("Purchase Price: " + assets.get(i).purchasePrice);
                 System.out.println("Purchase Date: " + assets.get(i).purchaseDate);

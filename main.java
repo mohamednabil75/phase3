@@ -1,8 +1,8 @@
 import Models.Asset;
 import Models.BankAccount;
-import Models.Financegoal;
-import Models.Goal;
 import Models.User;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Main {
@@ -64,6 +64,7 @@ public class Main {
                         case 1:
                             System.out.println("Enter your bank account ID:");
                             int bankId = sc.nextInt();
+                            sc.nextLine();
                             System.out.println("Enter your bank name:");
                             String bankName = sc.nextLine();
                             System.out.println("Enter your card number:");
@@ -96,12 +97,38 @@ public class Main {
                             System.out.println("Enter purchase price:");
                             float priceAsset = sc.nextFloat();
                             sc.nextLine();
-                            System.out.println("Enter purchase date (dd-MM-yyyy):");
-                            String dateAsset=sc.nextLine();
-                            System.out.println("Enter asset amount:");
-                            float amountAsset = sc.nextFloat();
+                            // Validate priceAsset
+                            System.out.println("enter index of bank account to pay");
+                            if(currentUser.getBankAccounts().size()==0){
+                                System.out.println("No bank accounts found. Please add a bank account first.");
+                                continue;
+                            }
+                            for (int i = 0; i < currentUser.getBankAccounts().size(); i++) {
+                                System.out.println(i + ". " + (currentUser.getBankAccounts().get(i)).bankName);
+                            }
+                            int bankIndex = sc.nextInt();
                             sc.nextLine();
-                            Asset newAsset = new Asset(assetId,protofolioId , nameAsset, amountAsset, typeAsset, priceAsset, dateAsset);
+                            if (bankIndex < 0 || bankIndex >= currentUser.getBankAccounts().size()) {
+                                System.out.println("Invalid index.");
+                                continue;
+                            }
+                            
+                            if(priceAsset <= 0) {
+                                System.out.println("Invalid price. Please enter a positive value.");
+                                continue;
+                            }
+                            else if(priceAsset > currentUser.accounts.get(bankIndex).balance) {
+                                System.out.println("Insufficient balance. Please deposit more funds.");
+                                continue;
+                            }
+                            else{
+                                currentUser.accounts.get(bankIndex).balance=(currentUser.accounts.get(bankIndex).balance - priceAsset);
+                                System.out.println("New balance after purchase: " + currentUser.accounts.get(bankIndex).balance);
+                            }
+                            LocalDateTime now = LocalDateTime.now();
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                            String dateAsset = now.format(formatter);
+                            Asset newAsset = new Asset(assetId,protofolioId , nameAsset,  typeAsset, priceAsset, dateAsset);
                             currentUser.addAsset(newAsset);
                             break;
                         case 3:
@@ -116,12 +143,22 @@ public class Main {
                             System.out.println("Enter new purchase price:");
                             float newPrice = sc.nextFloat();
                             sc.nextLine();
-                            System.out.println("Enter new asset amount:");
-                            float newAmount = sc.nextFloat();
-                            sc.nextLine();
-                            System.out.println("Enter new purchase date (dd-MM-yyyy):"); 
-                            String newPurchaseDate = sc.nextLine();
-                            Asset updatedAsset = new Asset(11, 114100, newName, newAmount, newType, newPrice, newPurchaseDate);
+                            if(newPrice <= 0) {
+                                System.out.println("Invalid price. Please enter a positive value.");
+                                continue;
+                            }
+                            else if(newPrice-currentUser.assets.get(index).purchasePrice > currentUser.getBalance()) {
+                                System.out.println("Insufficient balance. Please deposit more funds.");
+                                continue;
+                            }
+                            else{
+                                currentUser.setBalance(currentUser.getBalance() - (newPrice-currentUser.assets.get(index).purchasePrice));
+                                System.out.println("New balance after purchase: " + currentUser.getBalance());
+                            }
+                            LocalDateTime now1 = LocalDateTime.now();
+                            DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                            String newPurchaseDate = now1.format(formatter1);
+                            Asset updatedAsset = new Asset(currentUser.assets.get(index).assetId, currentUser.assets.get(index).portfolioId, newName, newType, newPrice, newPurchaseDate);
                             currentUser.updateAsset(index, updatedAsset);
                             System.out.println("Asset updated successfully.");
 
@@ -134,7 +171,7 @@ public class Main {
                             for (int i = 0; i < currentUser.getBankAccounts().size(); i++) {
                                 System.out.println(i + ". " + (currentUser.getBankAccounts().get(i)).bankName);
                             }
-                            int bankIndex = sc.nextInt();
+                             bankIndex = sc.nextInt();
                             sc.nextLine();
                             if (bankIndex >= 0 && bankIndex < currentUser.getBankAccounts().size()) {
                                 BankAccount selectedAccount = currentUser.getBankAccounts().get(bankIndex);
@@ -164,30 +201,6 @@ public class Main {
             }
         }
 
-        // Example Usage
-        BankAccount b1 = new BankAccount(114100, "Bank Masr", "Seif Anwar", "203012", 3343, "12-12-2025", 50000);
-        BankAccount b2 = new BankAccount(114100, "Bank Masr", "Ramadan Sobhi", "203989", 9807, "12-8-2025", 98700000);
-        BankAccount b3 = new BankAccount(114102, "Bank Alahly", "Samir Kamona", "204546", 7700, "30-12-2025", 98900);
-        User exampleUser = new User("Seif", "seif2005", "123123", 12343, 90000, 908080);
-
-        b1.deposit(7000);
-        exampleUser.addBankAccount(b1);
-        exampleUser.addBankAccount(b2);
-
-        System.out.println("New balance after deposit: " + b1.getBalance());
-
-        Goal g1 = new Goal("Buy a new car", 500000, "1-1-2026");
-        Goal g2 = new Goal("Save for house", 890000, "1-1-2029");
-        Goal g3 = new Goal("Investment", 500000, "1-1-2028");
-
-        Financegoal fg = new Financegoal(1);
-        fg.addNewGoal(g1);
-        fg.addNewGoal(g2);
-        fg.addNewGoal(g3);
-        fg.settargetAmount(1000000);
-
-        System.out.println("Goal reached: " + fg.isGoalReached());
-        exampleUser.addGoal(fg);
-        System.out.println(exampleUser.getGoals());
+       
     }
 }
