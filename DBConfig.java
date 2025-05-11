@@ -14,7 +14,7 @@ public class DBConfig {
     }
 
     public static void InitAsset(){
-        Database.Query("CREATE TABLE IF NOT EXISTS Asset (assetId INT, portfolio INT, name TEXT, assetType TEXT, purchasePrice REAL, purchaseDate DATA)");
+        Database.Query("CREATE TABLE IF NOT EXISTS Asset (assetId INT, portfolio INT, name TEXT, assetType TEXT, purchasePrice REAL, amount REAL, purchaseDate DATA)");
     }
 
     public static void InitPortfolio(){

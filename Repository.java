@@ -53,7 +53,7 @@ public class Repository {
 
     public static void AddAsset(Asset asset){
         try {
-            String query = "INSERT INTO Asset (assetId, portfolioId,name, assetType, purchasePrice, purchaseDate) VALUES (" + asset.assetId + ", '" + asset.portfolioId + ", '" + asset.name + "', '" + asset.assetType + "', " + asset.purchasePrice + ", '" + asset.purchaseDate + "')";
+            String query = "INSERT INTO Asset (assetId, portfolioId,name, assetType, purchasePrice, amount, purchaseDate) VALUES (" + asset.assetId + ", '" + asset.portfolioId + ", '" + asset.name + "', '" + asset.assetType + "', " + asset.purchasePrice + ", '" + "0, " + asset.purchaseDate + "')";
             Database.Query(query);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -71,12 +71,13 @@ public class Repository {
                 Asset asset = new Asset(
                     Integer.parseInt(row.get("assetId")), 
                     Integer.parseInt(row.get("portfolioId")),
-                    row.get("name"), 
-                    Float.parseFloat(row.get("amount")), 
+                    row.get("name"),
                     row.get("assetType"), 
                     Float.parseFloat(row.get("purchasePrice")), 
-                    new Date(row.get("purchaseDate"))
+                    new Date(row.get("purchaseDate")).toString()
                 );
+
+                asset.setamount(Float.parseFloat(row.get("amount")));
 
                 return asset;
             } else {
