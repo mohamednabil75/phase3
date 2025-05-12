@@ -53,7 +53,7 @@ public class Repository {
 
     public static void AddAsset(Asset asset){
         try {
-            String query = "INSERT INTO Asset (assetId, portfolioId,name, assetType, purchasePrice, amount, purchaseDate) VALUES (" + asset.assetId + ", '" + asset.portfolioId + ", '" + asset.name + "', '" + asset.assetType + "', " + asset.purchasePrice + ", " + "0, '" + asset.purchaseDate + "')";
+            String query = "INSERT INTO Asset (assetId, portfolioId,name, assetType, purchasePrice, amount, purchaseDate) VALUES (" + asset.assetId + ", '" + asset.portfolioId + ", '" + asset.name + "', '" + asset.assetType + "', " + asset.purchasePrice + ",0, '"  + asset.purchaseDate + "')";
             Database.Query(query);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -98,6 +98,14 @@ public class Repository {
         }
     }
 
+    public static void updateBankAccount(BankAccount bankAccount) {
+        try {
+            String query = "UPDATE BankAccount SET bankName = '" + bankAccount.bankName + "', cardHolderName = '" + bankAccount.cardHolderName + "', cardNumber = '" + bankAccount.cardNumber + "', cvv = " + bankAccount.cvv + ", expiredDate = '" + bankAccount.expiredDate + "', balance = " + bankAccount.balance + " WHERE bankId = " + bankAccount.bankId;
+            Database.Query(query);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static BankAccount getBankAccount(int bankId) {
         try {
             String query = "SELECT * FROM BankAccount WHERE bankId = " + bankId;

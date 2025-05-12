@@ -26,12 +26,10 @@ public class Main {
                 String password = sc.nextLine();
                 System.out.println("Enter your userId:");
                 int userId = sc.nextInt();
-                System.out.println("Enter your income:");
-                float income = sc.nextFloat();
-                System.out.println("Enter your balance:");
-                float balance = sc.nextFloat();
+              
+              
 
-                User user = new User(name, email, password, userId, income, balance);
+                User user = new User(name, email, password, userId, 0, 0);
                 Repository.addUser(user);
 
             } else if (choice == 2) {
@@ -62,9 +60,7 @@ public class Main {
 
                     switch (action) {
                         case 1:
-                            System.out.println("Enter your bank account ID:");
-                            int bankId = sc.nextInt();
-                            sc.nextLine();
+                       
                             System.out.println("Enter your bank name:");
                             String bankName = sc.nextLine();
                             System.out.println("Enter your card number:");
@@ -79,16 +75,13 @@ public class Main {
                             System.out.println("Enter your balance:");
                             float bankBalance = sc.nextFloat();
 
-                            BankAccount account = new BankAccount(bankId, bankName, currentUser.getName(), accountNumber, cvv, expiryDate, bankBalance);
-                            currentUser.addBankAccount(account);
+                            BankAccount account = new BankAccount(currentUser.getUserId(), bankName, currentUser.getName(), accountNumber, cvv, expiryDate, bankBalance);
+                            Repository.addBankAccount(account);
                             break;
 
                         case 2:
                             System.out.println("Enter asset ID:");
                             int assetId = sc.nextInt();
-                            sc.nextLine();
-                            System.out.println("Enter protofolio ID:");
-                            int protofolioId = sc.nextInt();
                             sc.nextLine();
                             System.out.println("Enter asset name:");
                             String nameAsset = sc.nextLine();
@@ -97,39 +90,25 @@ public class Main {
                             System.out.println("Enter purchase price:");
                             float priceAsset = sc.nextFloat();
                             sc.nextLine();
-                            // Validate priceAsset
-                            System.out.println("enter index of bank account to pay");
-                            if(currentUser.getBankAccounts().size()==0){
-                                System.out.println("No bank accounts found. Please add a bank account first.");
-                                continue;
-                            }
-                            for (int i = 0; i < currentUser.getBankAccounts().size(); i++) {
-                                System.out.println(i + ". " + (currentUser.getBankAccounts().get(i)).bankName);
-                            }
-                            int bankIndex = sc.nextInt();
-                            sc.nextLine();
-                            if (bankIndex < 0 || bankIndex >= currentUser.getBankAccounts().size()) {
-                                System.out.println("Invalid index.");
-                                continue;
-                            }
-                            
+                            BankAccount bankAccount = Repository.getBankAccount(currentUser.getUserId());
                             if(priceAsset <= 0) {
                                 System.out.println("Invalid price. Please enter a positive value.");
                                 continue;
                             }
-                            else if(priceAsset > currentUser.accounts.get(bankIndex).balance) {
+                            else if(priceAsset > bankAccount.balance) {
                                 System.out.println("Insufficient balance. Please deposit more funds.");
                                 continue;
                             }
                             else{
-                                currentUser.accounts.get(bankIndex).balance=(currentUser.accounts.get(bankIndex).balance - priceAsset);
-                                System.out.println("New balance after purchase: " + currentUser.accounts.get(bankIndex).balance);
+                                bankAccount.balance=(bankAccount.balance - priceAsset);
+                                System.out.println("New balance after purchase: " + bankAccount.balance);
                             }
+                            Repository.updateBankAccount(bankAccount);
                             LocalDateTime now = LocalDateTime.now();
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                             String dateAsset = now.format(formatter);
-                            Asset newAsset = new Asset(assetId,protofolioId , nameAsset,  typeAsset, priceAsset, dateAsset);
-                            currentUser.addAsset(newAsset);
+                            Asset newAsset = new Asset(assetId,currentUser.getUserId() , nameAsset,  typeAsset, priceAsset, dateAsset);
+                            Repository.AddAsset(newAsset);
                             break;
                         case 3:
                             currentUser.displayAssets();
@@ -161,31 +140,23 @@ public class Main {
                             Asset updatedAsset = new Asset(currentUser.assets.get(index).assetId, currentUser.assets.get(index).portfolioId, newName, newType, newPrice, newPurchaseDate);
                             currentUser.updateAsset(index, updatedAsset);
                             System.out.println("Asset updated successfully.");
+                            Repository.AddAsset(updatedAsset);
+
 
                         case 4:
-                            currentUser.displayAssets();
+                            Repository.getAsset(currentUser.getUserId());
                             break;
                         case 5:
 
-                            System.out.println("Enter the index of the bank account to view:");
-                            for (int i = 0; i < currentUser.getBankAccounts().size(); i++) {
-                                System.out.println(i + ". " + (currentUser.getBankAccounts().get(i)).bankName);
-                            }
-                             bankIndex = sc.nextInt();
-                            sc.nextLine();
-                            if (bankIndex >= 0 && bankIndex < currentUser.getBankAccounts().size()) {
-                                BankAccount selectedAccount = currentUser.getBankAccounts().get(bankIndex);
-                                System.out.println("Bank Account ID: " + selectedAccount.bankId);
-                                System.out.println("Bank Name: " + selectedAccount.bankName);
-                                System.out.println("Card Holder Name: " + selectedAccount.cardHolderName);
-                                System.out.println("Card Number: " + selectedAccount.cardNumber);
-                                System.out.println("CVV: " + selectedAccount.cvv);
-                                System.out.println("Expiry Date: " + selectedAccount.expiredDate);
-                                System.out.println("Balance: " + selectedAccount.getBalance());
-                            } else {
-                                System.out.println("Invalid index.");
-                            }
-                            break;    
+                            BankAccount account1= Repository.getBankAccount(currentUser.getUserId());
+                            System.out.println("Bank Account ID: " + account1.bankId);
+                            System.out.println("Bank Name: " + account1.bankName);
+                            System.out.println("Card Holder Name: " + account1.cardHolderName);
+                            System.out.println("Card Number: " + account1.cardNumber);
+                            System.out.println("CVV: " + account1.cvv);
+                            System.out.println("Expiry Date: " + account1.expiredDate);
+                            System.out.println("Balance: " + account1.balance);
+                            break;
 
                         case 6:
                             innerLoop = false;
