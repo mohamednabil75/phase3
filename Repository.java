@@ -53,7 +53,7 @@ public class Repository {
 
     public static void AddAsset(Asset asset){
         try {
-            String query = "INSERT INTO Asset (assetId, portfolio, name, assetType, purchasePrice, amount, purchaseDate) VALUES (" + asset.assetId + ", " + asset.portfolioId + ", " + asset.name + "', '" + asset.assetType + "', " + asset.purchasePrice + ", 0, '"  + asset.purchaseDate + "')";
+            String query = "INSERT INTO Asset (assetId, portfolio, name, assetType, purchasePrice, amount, purchaseDate) VALUES (" + asset.assetId + ", " + asset.portfolioId + ", '" + asset.name + "', '" + asset.assetType + "', " + asset.purchasePrice + ", 0, '"  + asset.purchaseDate + "')";
             Database.Query(query);
         } catch (Exception e) {
             throw new RuntimeException(e);
