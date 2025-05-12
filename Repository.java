@@ -1,6 +1,7 @@
 import Models.Asset;
 import Models.BankAccount;
 import Models.User;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +65,7 @@ public class Repository {
         try {
             String query = "SELECT * FROM Asset WHERE portfolio = " + portfolioId;
             List<Map<String, String>> result = Database.FetchQuery(query);
+            List<Asset> assets = new ArrayList<>();
             
             if (!result.isEmpty()) {
                 for (Map<String, String> row : result) {
@@ -77,11 +79,14 @@ public class Repository {
                     );
 
                     asset.setamount(Float.parseFloat(row.get("amount")));
+
+                    assets.add(asset);
                 }
             } else {
                 return null;
             }
-        return result;
+
+            return assets;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
