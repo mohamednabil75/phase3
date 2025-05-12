@@ -1,5 +1,5 @@
-import Models.User;
 
+import Models.User;
 public class Authenticator {
 
     private static int loggedUser = -1;
