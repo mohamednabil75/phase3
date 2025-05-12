@@ -54,7 +54,7 @@ public class Repository {
 
     public static void AddAsset(Asset asset){
         try {
-            String query = "INSERT INTO Asset (assetId, portfolioId,name, assetType, purchasePrice, amount, purchaseDate) VALUES (" + asset.assetId + ", '" + asset.portfolioId + ", '" + asset.name + "', '" + asset.assetType + "', " + asset.purchasePrice + ", " + "0, '" + asset.purchaseDate + "')";
+            String query = "INSERT INTO Asset (assetId, portfolio,name, assetType, purchasePrice, amount, purchaseDate) VALUES (" + asset.assetId + ", " + asset.portfolioId + ", '" + asset.name + "', '" + asset.assetType + "', " + asset.purchasePrice + ", " + "0, '" + asset.purchaseDate + "')";
             Database.Query(query);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -71,11 +71,11 @@ public class Repository {
                 for (Map<String, String> row : result) {
                     Asset asset = new Asset(
                         Integer.parseInt(row.get("assetId")), 
-                        Integer.parseInt(row.get("portfolioId")),
+                        Integer.parseInt(row.get("portfolio")),
                         row.get("name"),
                         row.get("assetType"), 
                         Float.parseFloat(row.get("purchasePrice")), 
-                        new Date(row.get("purchaseDate")).toString()
+                        row.get("purchaseDate")
                     );
 
                     asset.setamount(Float.parseFloat(row.get("amount")));
@@ -102,11 +102,11 @@ public class Repository {
 
                 Asset asset = new Asset(
                     Integer.parseInt(row.get("assetId")), 
-                    Integer.parseInt(row.get("portfolioId")),
+                    Integer.parseInt(row.get("portfolio")),
                     row.get("name"),
                     row.get("assetType"), 
                     Float.parseFloat(row.get("purchasePrice")), 
-                    new Date(row.get("purchaseDate")).toString()
+                    row.get("purchaseDate")
                 );
 
                 asset.setamount(Float.parseFloat(row.get("amount")));
@@ -124,6 +124,14 @@ public class Repository {
     public static void addBankAccount(BankAccount bankAccount) {
         try {
             String query = "INSERT INTO BankAccount (bankId, userId, bankName, cardHolderName, cardNumber, cvv, expiredDate, balance) VALUES (" + bankAccount.bankId + ", " + bankAccount.userId + ", '" + bankAccount.bankName + "', '" + bankAccount.cardHolderName + "', '" + bankAccount.cardNumber + "', " + bankAccount.cvv + ", '" + bankAccount.expiredDate + "', " + bankAccount.balance + ")";
+            Database.Query(query);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static void updateBankAccount(BankAccount bankAccount) {
+        try {
+            String query = "UPDATE BankAccount SET balance = " + bankAccount.balance + " WHERE bankId = " + bankAccount.bankId;
             Database.Query(query);
         } catch (Exception e) {
             throw new RuntimeException(e);

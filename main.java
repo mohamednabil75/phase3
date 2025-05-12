@@ -3,6 +3,7 @@ import Models.BankAccount;
 import Models.User;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -144,7 +145,20 @@ public class Main {
 
 
                         case 4:
-                            Repository.getAsset(currentUser.getUserId());
+                            List<Asset>assets=Repository.getAssets(currentUser.getUserId());
+                            if (assets.isEmpty()) {
+                                System.out.println("No assets found.");
+                            } else {
+                                for (int i = 0; i < assets.size(); i++) {
+                                    System.out.println("Asset " + (i + 1) + ": " + assets.get(i).name);
+                                    System.out.println("Asset ID: " + assets.get(i).assetId);
+                                    System.out.println("Portfolio ID: " + assets.get(i).portfolioId);
+                                    System.out.println("Asset Type: " + assets.get(i).assetType);
+                                    System.out.println("Purchase Price: " + assets.get(i).purchasePrice);
+                                    System.out.println("Purchase Date: " + assets.get(i).purchaseDate);
+                                    System.out.println("------------------------------");
+                                }
+                            }
                             break;
                         case 5:
 
