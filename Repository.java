@@ -60,6 +60,33 @@ public class Repository {
         }
     }
 
+    public static List<Asset> getAssets(int portfolioId) {
+        try {
+            String query = "SELECT * FROM Asset WHERE portfolio = " + portfolioId;
+            List<Map<String, String>> result = Database.FetchQuery(query);
+            
+            if (!result.isEmpty()) {
+                for (Map<String, String> row : result) {
+                    Asset asset = new Asset(
+                        Integer.parseInt(row.get("assetId")), 
+                        Integer.parseInt(row.get("portfolioId")),
+                        row.get("name"),
+                        row.get("assetType"), 
+                        Float.parseFloat(row.get("purchasePrice")), 
+                        new Date(row.get("purchaseDate")).toString()
+                    );
+
+                    asset.setamount(Float.parseFloat(row.get("amount")));
+                }
+            } else {
+                return null;
+            }
+        return result;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        
+    }
     public static Asset getAsset(int assetId) {
         try {
             String query = "SELECT * FROM Asset WHERE assetId = " + assetId;
